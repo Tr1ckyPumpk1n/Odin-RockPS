@@ -1,44 +1,146 @@
+let rounds = 0;
+const display = document.querySelector(".display");
+const choices = document.querySelectorAll(".selection");
+
 const getComputerChoice = () => {
-    let arr = ['Rock', 'Paper', 'Scissors'];
+    let arr = ['rock', 'paper', 'scissors'];
     return arr[Math.floor(Math.random() * 3)];
 };
 
-function game () {
-    let player = 0;
-    let comp = 0;
-    for (let count = 0; count < 5; count++) {
-        let [result, win] = playRound();
-        (win === 1) ? player++ : (win === 2) ? comp++ : true;
-        console.log(result);
+const win = function () {
+    display.textContent = "You Win! 😄";
+    const circle = document.querySelector(".normal");
+    circle.classList.replace("normal", "green");
+    rounds += 1;
+    if (rounds === 5) {
+        endGame();
     }
+};
 
-    console.log(`\nFinal Score:-\nPlayer: ${player}\nComputer: ${comp}\n`);
-    if (player > comp) console.log("\nYou Win!");
-    else if (comp > player) console.log("\nComputer Wins!");
-    else console.log("\nIt's a draw!");
+const draw = () => {
+    display.textContent = "It's a tie!";
+};
+
+function lose () {
+    display.textContent = "You Lose. ☹️";
 }
 
-function playRound () {
-    let pS = prompt("Enter your choice").toLowerCase();
-    const arr = ['rock', 'paper', 'scissors'];
-    if (!pS || !arr.includes(pS)) return ["Enter a valid response. You lose!", 2];
+function playRound (pChoice) {
+    disableChoices();
+    const compChoice = getComputerChoice();
 
-    let playerSelection = "";
-    pS = pS.split('');
-    for (let i = 0; i < pS.length; i++) {
-        if (i === 0) playerSelection += pS[i].toUpperCase();
-        else playerSelection += pS[i];
+    playAnimation(compChoice, pChoice);
+
+    setTimeout(() => {
+
+        if (pChoice === "rock" && compChoice === "scissors" || pChoice === "paper" && compChoice === "rock" || pChoice === "scissors" && compChoice === "paper") {
+            win();
+        } else if (pChoice === compChoice) {
+            draw();
+        } else {
+            lose();
+        }
+
+        enableChoices();
+    }, 1500);
+}
+
+function playAnimation (...pc) {
+    const obj = {
+        rock : '<i class="fa-solid fa-hand-back-fist"></i>',
+        paper : '<i class="fa-solid fa-hand"></i>',
+        scissors : '<i class="fa-solid fa-hand-scissors fa-rotate-90"></i>',
+    }
+    const normal = '<i class="fa-solid fa-hand-fist fa-rotate-90"></i>';
+
+    const cIcon = document.querySelector(".comp");
+    const pIcon = document.querySelector(".play");
+
+    cIcon.innerHTML = normal;
+    pIcon.innerHTML = normal;
+
+    const icons = document.querySelectorAll(".icon > i");
+
+    display.textContent = "Rock!";
+
+    for (let icon of icons) {
+        icon.classList.toggle("icon-animation");
     }
 
-    const computerSelection = getComputerChoice();
+    setTimeout(() => {
+        display.textContent = "Paper!"
+    }, 350);
 
-    if (playerSelection === computerSelection) {
-        return [`It's a draw! Both players chose ${computerSelection}`, 0];
-    } else if (computerSelection === 'Rock' && playerSelection === 'Scissors' || computerSelection === 'Paper' && playerSelection === 'Rock' || computerSelection === 'Scissors' && playerSelection === 'Paper') {
-        return [`You Lose! ${computerSelection} beats ${playerSelection}`, 2];
-    } else {
-        return [`You win! ${playerSelection} beats ${computerSelection}`, 1];
+    setTimeout(() => {
+        display.textContent = "Scissors!"
+    }, 700);
+
+    setTimeout(() => {
+        display.textContent = "Shoot!!!"
+    }, 1050);
+
+    setTimeout(() => {
+        for (let i = 0; i < 2; i++) {
+            icons[i].classList.toggle("icon-animation");
+            icons[i].parentNode.innerHTML = obj[pc[i]];
+        }
+    }, 1500);
+}
+
+function endGame () {
+    const box = document.querySelector("#end");
+    const close = document.querySelector(".close");
+    const replay = document.querySelector(".replay");
+
+    box.style.display = "flex";
+    box.classList.add("end-animation");
+
+    document.addEventListener("click", (event) => {
+        if (event.target.parentNode.id !== "end" && event.target.id !== "end") {
+            box.style.display = "none";
+            retry();
+        }
+    });
+
+    close.addEventListener("click", () => {
+        box.style.display = "none";
+        retry();
+    });
+
+    replay.addEventListener("click", () => {
+        location.reload();
+    });
+}
+
+function retry() {
+    const retry = document.querySelector(".retry");
+        retry.style.display = "block";
+        retry.classList.add("retry-animation");
+
+        retry.addEventListener("click", () => {
+            location.reload();
+        });
+    }
+
+addEventListener("DOMContentLoaded", enableChoices);
+
+function start (event)  {
+    event.stopPropagation();
+    const selection = event.target.id || event.target.parentNode.id;
+    if (rounds < 5) {
+        playRound(selection);
     }
 }
 
-game();
+function enableChoices () {
+
+    for (let choice of choices) {
+        choice.addEventListener("click", start);
+    }
+}
+
+function disableChoices () {
+    for (let choice of choices) {
+        choice.removeEventListener("click", start);
+    }
+}
