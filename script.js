@@ -1,6 +1,9 @@
 let rounds = 0;
 const display = document.querySelector(".display");
 const choices = document.querySelectorAll(".selection");
+const playerDiv = document.querySelector(".player");
+const playerName = document.querySelector(".player > h3");
+const pIcon = document.querySelector(".play");
 
 const getComputerChoice = () => {
     let arr = ['rock', 'paper', 'scissors'];
@@ -54,7 +57,6 @@ function playAnimation (...pc) {
     const normal = '<i class="fa-solid fa-hand-fist fa-rotate-90"></i>';
 
     const cIcon = document.querySelector(".comp");
-    const pIcon = document.querySelector(".play");
 
     cIcon.innerHTML = normal;
     pIcon.innerHTML = normal;
@@ -144,3 +146,27 @@ function disableChoices () {
         choice.removeEventListener("click", start);
     }
 }
+
+
+
+
+const bigger = window.matchMedia("(min-width: 951px)");
+
+function changeBig (event) {
+    if (event.matches) {
+        playerDiv.insertBefore(playerName, pIcon);
+    }
+}
+
+changeBig(bigger);
+bigger.addEventListener("change", changeBig);
+
+const smaller = window.matchMedia("(max-width: 950px)");
+
+function changeSmall (event) {
+    if (smaller.matches) {
+        playerDiv.insertBefore(pIcon, playerName);
+    }
+}
+changeSmall(smaller);
+smaller.addEventListener("change", changeSmall);
