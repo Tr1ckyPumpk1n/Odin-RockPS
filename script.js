@@ -3,6 +3,7 @@ const display = document.querySelector(".display");
 const choices = document.querySelectorAll(".selection");
 const playerDiv = document.querySelector(".player");
 const playerName = document.querySelector(".player > h3");
+const cIcon = document.querySelector(".comp");
 const pIcon = document.querySelector(".play");
 
 const getComputerChoice = () => {
@@ -13,7 +14,11 @@ const getComputerChoice = () => {
 const win = function () {
     display.textContent = "You Win! 😄";
     const circle = document.querySelector(".normal");
+
     circle.classList.replace("normal", "green");
+    pIcon.classList.add("win");
+    cIcon.classList.add("lose");
+
     rounds += 1;
     if (rounds === 5) {
         endGame();
@@ -21,15 +26,25 @@ const win = function () {
 };
 
 const draw = () => {
+    pIcon.classList.add("draw");
+    cIcon.classList.add("draw");
+
     display.textContent = "It's a tie!";
 };
 
 function lose () {
+    pIcon.classList.add("lose");
+    cIcon.classList.add("win");
+
     display.textContent = "You Lose. ☹️";
 }
 
 function playRound (pChoice) {
     disableChoices();
+    pIcon.classList.remove("win", "lose", "draw");
+    cIcon.classList.remove("win", "lose", "draw");
+
+
     const compChoice = getComputerChoice();
 
     playAnimation(compChoice, pChoice);
@@ -50,13 +65,11 @@ function playRound (pChoice) {
 
 function playAnimation (...pc) {
     const obj = {
-        rock : '<i class="fa-solid fa-hand-back-fist"></i>',
-        paper : '<i class="fa-solid fa-hand"></i>',
-        scissors : '<i class="fa-solid fa-hand-scissors fa-rotate-90"></i>',
+        rock : '<i class="fa-regular fa-hand-back-fist"></i>',
+        paper : '<i class="fa-regular fa-hand"></i>',
+        scissors : '<i class="fa-regular fa-hand-scissors fa-rotate-90"></i>',
     }
     const normal = '<i class="fa-solid fa-hand-fist fa-rotate-90"></i>';
-
-    const cIcon = document.querySelector(".comp");
 
     cIcon.innerHTML = normal;
     pIcon.innerHTML = normal;
@@ -146,8 +159,6 @@ function disableChoices () {
         choice.removeEventListener("click", start);
     }
 }
-
-
 
 
 const bigger = window.matchMedia("(min-width: 951px)");
