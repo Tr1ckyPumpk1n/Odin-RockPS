@@ -14,8 +14,8 @@ body {
 }
 
 h1 {
+    width: max-content;
     font-size: calc(1.6rem + 1.2vw);
-    text-align: center;
     color: #fff;
     text-shadow:
         0 0 15px #fff,
@@ -24,7 +24,11 @@ h1 {
         0 0 30px #e60059,
         0 0 60px #e60059;
 
-    margin: calc(20px + 1vw) 0;
+    margin: calc(20px + 1vw) auto;
+}
+
+h1:hover {
+    cursor: pointer;
 }
 
 .main {
@@ -285,7 +289,7 @@ h2 {
 
     font-size: calc(0.7rem + 0.5vw);
     font-weight: bold;
-    font-family: 'satisfy', serif;
+    font-family: 'satisfy', serif !important;
 }
 
 .replay:hover, .replay:active {
@@ -386,5 +390,9 @@ h2 {
     .display {
         text-align: center;
         flex-basis: 170px;
+    }
+
+    #end > p {
+        margin-top: 0;
     }
 }

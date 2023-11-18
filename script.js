@@ -182,4 +182,8 @@ function changeSmall (event) {
 changeSmall(smaller);
 smaller.addEventListener("change", changeSmall);
 
-endGame();
+const h1 = document.querySelector("h1");
+
+h1.addEventListener("click", () => {
+    window.open("https://github.com/Tr1ckyPumpk1n/Odin-RockPS", "_blank");
+});
