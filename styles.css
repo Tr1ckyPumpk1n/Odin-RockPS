@@ -285,6 +285,7 @@ h2 {
 
     font-size: calc(0.7rem + 0.5vw);
     font-weight: bold;
+    font-family: 'satisfy', serif;
 }
 
 .replay:hover, .replay:active {

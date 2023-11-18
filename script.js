@@ -181,3 +181,5 @@ function changeSmall (event) {
 }
 changeSmall(smaller);
 smaller.addEventListener("change", changeSmall);
+
+endGame();
