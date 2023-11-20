@@ -1,10 +1,17 @@
-let rounds = 0;
+let userWins = 0;
+let computerWins = 0;
+const body = document.querySelector("body");
 const display = document.querySelector(".display");
 const choices = document.querySelectorAll(".selection");
+const computerDiv = document.querySelector(".computer");
+const computerName = document.querySelector(".computer > h3");
+const cWins = document.querySelector("#comp-wins");
 const playerDiv = document.querySelector(".player");
 const playerName = document.querySelector(".player > h3");
 const cIcon = document.querySelector(".comp");
 const pIcon = document.querySelector(".play");
+const opaque = document.querySelector(".opacity");
+const greet = document.querySelector("#intro");
 
 const getComputerChoice = () => {
     let arr = ['rock', 'paper', 'scissors'];
@@ -13,15 +20,18 @@ const getComputerChoice = () => {
 
 const win = function () {
     display.textContent = "You Win! 😄";
-    const circle = document.querySelector(".normal");
 
+    const circle = document.querySelector("#player-wins > .normal");
     circle.classList.replace("normal", "green");
+
     pIcon.classList.add("win");
     cIcon.classList.add("lose");
 
-    rounds += 1;
-    if (rounds === 5) {
-        endGame();
+    userWins += 1;
+    if (userWins === 5) {
+        setTimeout(endGame, 1200, 1);
+    } else {
+        enableChoices();
     }
 };
 
@@ -30,13 +40,24 @@ const draw = () => {
     cIcon.classList.add("draw");
 
     display.textContent = "It's a tie!";
+    enableChoices();
 };
 
 function lose () {
+    const circle = document.querySelector("#comp-wins > .normal");
+    circle.classList.replace("normal", "red");
+
     pIcon.classList.add("lose");
     cIcon.classList.add("win");
 
     display.textContent = "You Lose. ☹️";
+
+    computerWins += 1;
+    if (computerWins === 5) {
+        setTimeout(endGame, 1200);
+    } else {
+        enableChoices();
+    }
 }
 
 function playRound (pChoice) {
@@ -59,8 +80,7 @@ function playRound (pChoice) {
             lose();
         }
 
-        enableChoices();
-    }, 1500);
+    }, 1350);
 }
 
 function playAnimation (...pc) {
@@ -99,25 +119,35 @@ function playAnimation (...pc) {
             icons[i].classList.toggle("icon-animation");
             icons[i].parentNode.innerHTML = obj[pc[i]];
         }
-    }, 1500);
+    }, 1350);
 }
 
-function endGame () {
+function endGame (num) {
     const box = document.querySelector("#end");
+    const para = document.querySelector("#end > p");
     const close = document.querySelector(".close");
     const replay = document.querySelector(".replay");
 
+    if (num === 1) {
+        para.innerHTML = "Congratulations ! <br/> You Won !";
+    } else {
+        para.innerHTML = "You Lost ! <br/> Better luck next time";
+    }
+
+    opaque.style.display = "block";
     box.style.display = "flex";
     box.classList.add("end-animation");
 
     document.addEventListener("click", (event) => {
         if (event.target.parentNode.id !== "end" && event.target.id !== "end") {
+            opaque.style.display = "none";
             box.style.display = "none";
             retry();
         }
     });
 
     close.addEventListener("click", () => {
+        opaque.style.display = "none";
         box.style.display = "none";
         retry();
     });
@@ -129,22 +159,26 @@ function endGame () {
 
 function retry() {
     const retry = document.querySelector(".retry");
-        retry.style.display = "block";
-        retry.classList.add("retry-animation");
+    retry.style.display = "block";
+    retry.classList.add("retry-animation");
 
-        retry.addEventListener("click", () => {
-            location.reload();
-        });
-    }
+    retry.addEventListener("click", () => {
+        location.reload();
+    });
+}
 
-addEventListener("DOMContentLoaded", enableChoices);
+const startButton = document.querySelector("#start");
+
+startButton.addEventListener("click", () => {
+    opaque.style.display = "none";
+    greet.style.display = "none";
+    enableChoices();
+});
 
 function start (event)  {
     event.stopPropagation();
     const selection = event.target.id || event.target.parentNode.id;
-    if (rounds < 5) {
-        playRound(selection);
-    }
+    playRound(selection);
 }
 
 function enableChoices () {
@@ -162,9 +196,12 @@ function disableChoices () {
 
 
 const bigger = window.matchMedia("(min-width: 951px)");
+const smaller = window.matchMedia("(max-width: 950px)");
 
 function changeBig (event) {
     if (event.matches) {
+        computerDiv.appendChild(cWins);
+
         playerDiv.insertBefore(playerName, pIcon);
     }
 }
@@ -172,15 +209,17 @@ function changeBig (event) {
 changeBig(bigger);
 bigger.addEventListener("change", changeBig);
 
-const smaller = window.matchMedia("(max-width: 950px)");
-
 function changeSmall (event) {
     if (smaller.matches) {
+        computerDiv.insertBefore(cWins, computerName);
+
         playerDiv.insertBefore(pIcon, playerName);
     }
 }
+
 changeSmall(smaller);
 smaller.addEventListener("change", changeSmall);
+
 
 const h1 = document.querySelector("h1");
 

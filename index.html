@@ -9,53 +9,90 @@
     <script src="script.js" defer></script>
 </head>
 <body>
+    <div class="opacity">
+        <div id="intro" class="intro-animation">
+            <p>Welcome to Rock-Paper-Scissors.</p>
+            <br/>
+
+            <p>This the the classic game that we've all been playing since childhood.</p>
+            <br/>
+
+            <p>- You will be playing against the computer.</p>
+            <p>- To play, just press the start button and take your pick from the options at the bottom.</p>
+            <p>- Yellow colour represents "Rock / Stone"</p>
+            <p>- Rose colour represents "Paper"</p>
+            <p>- Violet colour represents "Scissors"</p>
+            <br/>
+
+            <p>The rules are as follows:-</p>
+            <ul>
+                <li>First one to take 5 victories wins the game.</li>
+                <li>Rock beats Scissors</li>
+                <li>Scissors beats Paper</li>
+                <li>Paper Beats Rock</li>
+            </ul>
+            <br/>
+
+            <p>GoodLuck!</p>
+
+            <button id="start">Start</button>
+        </div>
+
+        <div id="end">
+            <button class="close">X</button>
+
+            <p>Congratulations ! <br/>You won !</p>
+
+            <button class="replay">Replay</button>
+        </div>
+    </div>
+
     <h1>Rock-Paper-Scissors</h1>
 
     <div class="main">
 
         <div class="cover">
             <div class="computer">
+                <div class="wins" id="comp-wins">
+                    <div class="circle normal"></div>
+                    <div class="circle normal"></div>
+                    <div class="circle normal"></div>
+                    <div class="circle normal"></div>
+                    <div class="circle normal"></div>
+                </div>
+
                 <h3>Computer</h3>
                 <div class="icon comp">
                     <i class="fa-regular fa-circle-question"></i>
                 </div>
             </div>
 
-            <div class="display">Welcome!</div>
-
-            <div id="end">
-                <button class="close">X</button>
-
-                <p>Congratulations! <br/>You won!</p>
-
-                <button class="replay">Replay</button>
-            </div>
+            <div class="display">Welcome !</div>
 
             <div class="player">
                 <div class="icon play">
                     <i class="fa-regular fa-circle-question"></i>
                 </div>
                 <h3>You</h3>
+
+                <div class="wins" id="player-wins">
+                    <div class="circle normal"></div>
+                    <div class="circle normal"></div>
+                    <div class="circle normal"></div>
+                    <div class="circle normal"></div>
+                    <div class="circle normal"></div>
+                </div>
             </div>
-        </div>
-
-        <div class="container">
-
-            <div class="selection" id="rock"><i class="fa-regular fa-hand-back-fist"></i></div>
-            <div class="selection" id="paper"><i class="fa-regular fa-hand"></i></div>
-            <div class="selection" id="scissors"><i class="fa-regular fa-hand-scissors fa-rotate-90"></i></div>
-
         </div>
 
     </div>
 
-    <h2>Victories</h2>
-    <div class="wins">
-        <div class="circle normal"></div>
-        <div class="circle normal"></div>
-        <div class="circle normal"></div>
-        <div class="circle normal"></div>
-        <div class="circle normal"></div>
+    <div class="container">
+
+        <div class="selection" id="rock"><i class="fa-regular fa-hand-back-fist"></i></div>
+        <div class="selection" id="paper"><i class="fa-regular fa-hand"></i></div>
+        <div class="selection" id="scissors"><i class="fa-regular fa-hand-scissors fa-rotate-90"></i></div>
+
     </div>
 
     <div class="retry">Replay</div>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600&family=Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600&family=Lobster&family=Satisfy&display=swap');
 
 * {
     margin: 0;
@@ -7,10 +7,14 @@
 }
 
 body {
-    height: 95vh;
+    height: 98vh;
     background: radial-gradient(#333, #222 35%, #000 97%);
 
     font-family: 'satisfy', 'dancing script', serif;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 h1 {
@@ -24,7 +28,7 @@ h1 {
         0 0 30px #e60059,
         0 0 60px #e60059;
 
-    margin: calc(20px + 1vw) auto;
+    margin: calc(25px + 1vw) auto;
 }
 
 h1:hover {
@@ -65,13 +69,13 @@ h1:hover {
 
 .computer, .player {
     flex: 1;
+    width: 100%;
     font-size: calc(1.6em + 1.2vw);
     text-align: center;
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 15px;
+    justify-content: space-around;
 }
 
 h3 {
@@ -88,8 +92,10 @@ h3 {
     text-shadow:
         0 0 3px rgb(202, 202, 202),
         0 0 5px rgb(133, 133, 133);
+}
 
-    margin: 10px auto;
+.icon > i {
+    vertical-align: middle;
 }
 
 .icon-animation {
@@ -116,17 +122,19 @@ h3 {
 }
 
 .container {
+    width: 85vw;
+    max-width: 1000px;
     display: flex;
     justify-content: space-around;
-    margin: 10px;
+    margin: calc(0.8rem + 1vw) auto 10px auto;
 }
 
 .selection {
     padding: calc(8px + 1.8vw);
     border: 3px solid #141414;
     border-radius: 5px;
-    width: calc(35px + 1.7vw);
-    height: calc(35px + 1.7vw);
+    width: calc(40px + 1vw);
+    height: calc(40px + 1vw);
 
     display: flex;
     align-items: center;
@@ -179,9 +187,8 @@ h2 {
 }
 
 .wins {
-    width: 75vw;
-    max-width: 800px;
-    margin: calc(15px + 1vw) auto;
+    width: 75%;
+    margin: calc(10px + 0.5vw) auto;
 
     display: flex;
     justify-content: space-around;
@@ -213,12 +220,103 @@ h2 {
         0 0 15px #02eb02;
 }
 
+.red {
+    border-color: #eba102;
+    background-color: #ef8007;
+    box-shadow:
+        inset 0 0 7px rgb(10, 28, 68),
+        0 0 5px #eba102,
+        0 0 10px #eba102,
+        0 0 15px #eba102;
+}
+
+.opacity {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#intro {
+    position: relative;
+    z-index: 2;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 80%;
+    margin: auto;
+    padding: 18px 18px 18px calc(1rem + 1vw);
+
+    font-size: calc(0.8rem + 0.8vw);
+    font-family: 'lobster', sans-serif;
+
+    background: linear-gradient(#f00, #e00 35%, #b00 75%);
+    border: 4px solid #9DD9D2;
+    border-radius: 10px;
+
+    box-shadow:
+        inset 0 0 15px #9DD9D2,
+        inset 0 0 8px #f00,
+        0 0 5px #9DD9D2,
+        0 0 10px #9DD9D2,
+        0 0 15px #9DD9D2;
+}
+
+#intro > p:first-of-type, #intro > p:last-of-type {
+    text-align: center;
+    font-size: calc(1rem + 1vw);
+}
+
+.intro-animation {
+    animation: goSmall 1.5s;
+}
+
+@keyframes goSmall {
+    0% {
+        transform: scale(3);
+    }
+    100% {
+        transform: scale(1);
+        transform: translateY(-50%);
+    }
+}
+
+#start {
+    display: block;
+    margin: 15px auto 0 auto;
+
+    font-size: inherit;
+    font-family: inherit;
+    padding: calc(0.5rem + 0.3vw) calc(1rem + 0.8vw);
+
+    border: 2px solid #9DD9D2;
+    border-radius: 10px;
+
+    box-shadow:
+        inset 0 0 15px #9DD9D2,
+        inset 0 0 8px #f00,
+        0 0 5px #9DD9D2,
+        0 0 10px #9DD9D2,
+        0 0 15px #9DD9D2;
+}
+
+#start:hover, #start:active {
+    background-color: #dfdfdf;
+    cursor: pointer;
+}
+
+ul {
+    padding-left: calc(1rem + 1vw);
+}
+
 #end {
     display: none;
-    position: absolute;
-    z-index: 1;
+    position: relative;
+    z-index: 2;
     top: 30%;
-    width: 80%;
+    width: 65%;
     max-width: 400px;
     height: 250px;
     margin: auto;
@@ -237,7 +335,7 @@ h2 {
 
 .end-animation {
     flex-direction: column;
-    animation: pop-up 1s;
+    animation: pop-up 1.5s;
 }
 
 @keyframes pop-up {
@@ -394,5 +492,9 @@ h2 {
 
     #end > p {
         margin-top: 0;
+    }
+
+    .computer, .player {
+        height: 100%;
     }
 }
